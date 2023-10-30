@@ -1,0 +1,46 @@
+###
+DELETE http://localhost:4000/api/users/73835ad6-dd22-4971-b805-45fcbaa14143
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZW11c2siLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTY5NTkyODI5MiwiZXhwIjoxNjk1OTI5NDkyfQ.8FC5fr94DxyKlCQsNxXoyV31jfOwnDN63P1fGJKncKI
+
+###
+GET http://localhost:4000/api/users/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZHRydW1wIiwicGFzc3dvcmQiOiIxMjMiLCJpYXQiOjE2OTY3OTMxNjcsImV4cCI6MTY5Njc5NDM2N30.mCHCeKHFhZ6QhoTv8chM-cLAkNdzx7K7Kq960ZJIeU4
+
+
+###
+GET http://localhost:4000/api/users/73835ad6-dd22-4971-b805-45fcbaa14143
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZHRydW1wIiwicGFzc3dvcmQiOiIxMjMiLCJpYXQiOjE2OTY3OTMxNjcsImV4cCI6MTY5Njc5NDM2N30.mCHCeKHFhZ6QhoTv8chM-cLAkNdzx7K7Kq960ZJIeU4
+###
+POST http://localhost:6000/login
+Content-Type: application/json
+
+{
+  "username": "emusk",
+  "password":"123"
+}
+
+###
+POST http://localhost:6000/token
+Content-Type: application/json
+
+{
+  "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmZ1cnkiLCJpYXQiOjE2OTMwMjQ0MjB9.5C3OiVhHW0bk5X422zAfXp0n8_tEGRbqgETm3qlurYw"
+}
+
+###
+DELETE  http://localhost:6000/logout
+Content-Type: application/json
+
+{
+  "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmZ1cnkiLCJpYXQiOjE2OTMwMjQ0MjB9.5C3OiVhHW0bk5X422zAfXp0n8_tEGRbqgETm3qlurYw"
+}
+###
+PATCH  http://localhost:4000/api/contacts/
+
+Content-Type: application/javascript
+
+{
+  "id":"2",
+   "firstname":"New Name"
+}
+

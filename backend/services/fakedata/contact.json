@@ -1,0 +1,40 @@
+{
+   "data":{
+      "contact":{
+         "firstname":"Manuel",
+         "lastname":"Martin",
+         "stateid":"0999",
+         "contactTypeId":200,
+      "user":{
+         "email":"mmartin22@yopmail.com",
+         "username":"mmartin22",
+         "password":"12312312",
+         "roles":[{"roleId":500}]
+      },
+      "address":[{
+             "street":"1223 Alpine ave.",
+             "city":"San Francisco",
+              "state":"California",
+              "zipcode":"49504",
+              "country":"USA",
+              "addressTypeId":200
+          },{
+             "street":"234 28th Street",
+             "city":"Wyoming",
+              "state":"Michigan",
+              "zipcode":"49519",
+              "country":"USA",
+              "addressTypeId":100
+          }],
+       "phone":[{
+               "phone":"616-877-1443","phoneTypeId":100
+            },{
+               "phone":"616-778-4314","phoneTypeId":200
+            }
+         ],
+         "company":[{
+            "companyName":"Yahoo",
+            "website":"http://www.yahoo.com"
+         }]
+      }
+   }}

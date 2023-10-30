@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Component" ALTER COLUMN "lenght" DROP NOT NULL,
+ALTER COLUMN "width" DROP NOT NULL,
+ALTER COLUMN "componentTypeId" DROP NOT NULL;

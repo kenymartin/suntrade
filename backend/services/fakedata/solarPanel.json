@@ -1,0 +1,17 @@
+{"data": {
+    "solarPanel": {
+        "description": "Solar Panel 1.0.0",
+        "typeId":1,
+        "components":[{
+                "quantity":1
+            },{
+                "quantity":2
+            },{
+                "quantity":3
+            }
+        ],
+        "price": 20.00,
+        "imageUrl": "http://openstack.componentjs.org/"
+        
+    }
+}}

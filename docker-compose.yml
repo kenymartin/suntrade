@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  auth-server:
+    build: ./backend/authServer.ts
+    port: 6000
+  main-server:
+    build: ./backend/server.ts
+    port: 4000
+    
+  backend:
+    build: ./backend  
+    ports:
+      - 4000:4000
+    environment:
+      - DATABASE_URL:"postgresql://postgres:password@localhost:5432/spo"
+
+  frontend:
+    depends_on:
+      - backend
+
+    build: ./frontend
+    ports:
+      - 3000:3000
+
+  database:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - spo://data/db
+volumes:
+    spo: 
