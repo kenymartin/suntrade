@@ -1,4 +1,4 @@
-FROM node:16.13 AS Development
+FROM node:16.13
 
 WORKDIR /app
 COPY package*.json ./
