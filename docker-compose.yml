@@ -1,39 +1,48 @@
 version: "3.8"
+volumes:
+    spo_auth:
+    spo_main:
 services:
   auth-server:
     build: 
-      context: ./backend
-      dockerfile: Dockerfile.auth
+      context: ./backend/dockerauth
+      dockerfile: Dockerfile
+      
     ports: 
       - "6000:6000"
+    environment:
+      - DATABASE_URL:`postgresql://postgres:password@localhost:5432/spo_auth`
+  
   main-server:
     build: 
-      context: ./backend
-      dockerfile: Dockerfile.main
+      context: ./backend/dockermain
+      dockerfile: Dockerfile
+
+    depends_on:
+      - auth-server
     ports: 
       - "4000:4000"
-    
-  backend:
-    build: ./backend  
-    ports:
-      - "4000:4000"
     environment:
-      - DATABASE_URL:`postgresql://postgres:password@localhost:5432/spo`
+      - DATABASE_URL:`postgresql://postgres:password@localhost:5432/spo_main`
 
   frontend:
-    depends_on:
-      - backend
-    build: 
-      context: ./frontend
-      dockerfile: Dockerfile
+    build: ./frontend
     ports:
       - "3000:3000"
+    depends_on:
+      - main-server
 
   database:
     image: postgres:latest
     ports:
       - 5432:5432
     volumes:
-      - spo://data/db
-volumes:
-    spo: 
+      - spo_main://data/db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=spo_auth  # Create a separate database for each server
+
+
+
+
