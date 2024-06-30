@@ -5,7 +5,7 @@
     "moduleResolution": "node",
     "module": "esnext"
   },
-  "include": ["/**/*.ts"],
+  "include": ["/**/*.ts", "../frontend/src/index.ts"],
 
   "ts-node": { "esm": true }
 }
