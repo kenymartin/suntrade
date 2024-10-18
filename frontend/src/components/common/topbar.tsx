@@ -1,24 +1,24 @@
 import { isLoggedIn, logout} from '../../services/auth.service';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const TopBar = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const data =JSON.parse(localStorage.getItem('user') as string)
-  let user =data?.data?.contact;
+  let user =data?.data?.Contact;
   console.log(user)
   const handleLogin = () => {
-    history.push('/login');
+    navigate('/login');
   }
   const handleLogout = () => {
    try {
     logout();
-    history.push('/');
+    navigate('/');
     // window.location.reload();
    } catch (error) {
     console.log(error);
    }
   }
   const handleSignup = () => {
-    history.push('/signup');
+    navigate('/signup');
   }
   return (
     <>
@@ -49,6 +49,15 @@ const TopBar = () => {
               <></>
             )}
             <div className="d-inline-flex align-items-center">
+            <a className="text-body mr-3" href="">
+                Buy
+              </a>
+              <a className="text-body mr-3" href="">
+                Sell
+              </a>
+              <a className="text-body mr-3" href="">
+                Bid
+              </a>
               <div className="btn-group">
                 <button
                   type="button"

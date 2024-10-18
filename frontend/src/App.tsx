@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/homepage";
 import CartPage from "./pages/cartpage";
 import ContactPage from "./pages/contactpage";
@@ -8,29 +8,39 @@ import CheckoutPage from "./pages/checkoutpage";
 import LoginPage from "./pages/loginpage";
 import ProfilePage from "./pages/profilepage";
 import SignupPage from "./pages/signuppage";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
+import ConfirmRegistrationPage from "./pages/confirm-registrationpage";
+import "react-toastify/dist/ReactToastify.css";
+import LinkSentPage from "./pages/linksentpage";
+import ForgotPasswordLinkPage from "./pages/forgotpasswordlinkpage";
+import ChangePassword from "./components/changepassword";
 
-import 'react-toastify/dist/ReactToastify.css';
 function App() {
-  
   return (
     <>
-     <ToastContainer />
+      <ToastContainer />
       <Router>
-        <Switch>
-          <Route path="/" exact component={HomePage} />
-          <Route path="/cart" component={CartPage} />
-          <Route path="/contact" component={ContactPage} />
-          <Route path="/detail" component={DetailPage} />
-          <Route path="/shop" component={ShopPage} />
-          <Route path="/checkout" component={CheckoutPage} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/signup" component={SignupPage} />
-          <Route path="/profile" component={ProfilePage} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/detail" element={<DetailPage />} />
+          <Route path="/shop" element={<ShopPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route
+            path="/confirm-registration"
+            element={<ConfirmRegistrationPage />}
+          />
+          <Route path="/linksent" element={<LinkSentPage />} />
+          <Route path="/forgotpasswordlink" element={<ForgotPasswordLinkPage />} />
+          <Route path="/changepassword" element={<ChangePassword />} />
+        </Routes>
       </Router>
-      </>
-      
+    </>
   );
 }
+
 export default App;

@@ -1,5 +1,74 @@
+
+import _ from 'lodash';
+
 // import { Link } from 'react-router-dom';
-const NavBar = () => {
+// const Products = [
+//   { id: 1, name: "air conditioning" },
+//   { id: 2, name: "balloon" },
+//   { id: 3, name: "charger" },
+//   { id: 4, name: "backpack" },
+//   { id: 5, name: "cell phone charger" },
+//   { id: 6, name: "Strawberry Tree" },
+//   { id: 7, name: "chimney" },
+//   { id: 8, name: "powered waste compacting bin" },
+//   { id: 9, name: "powered water pump" },
+//   { id: 10, name: "powered water heater" },
+//   { id: 11, name: "powered water cooler" },
+//   { id: 14, name: "powered water dispenser" },
+//   { id: 15, name: "powered water purifier" },
+//   { id: 16, name: "cooker" },
+//   { id: 17, name: "dryer" },
+//   { id: 18, name: "powered fan" },
+//   //     furnace
+//   //     inverter
+//   //     keyboard
+//   //     lamp
+//   //     pond
+//   //     road stud
+//   //     street light
+//   //     traffic light
+//   //     Tuki
+//   //    powered flashlight
+//   //     notebook
+//   //    powered calculator
+//   //    powered desalination unit
+//   //    powered pump
+//   //     PV Junction box
+//   //    powered fountain in a bird bath under shade versus direct sunlight
+//   //    powered fountain
+//   //    powered radio
+//   //    powered refrigerator
+//   //    powered Stirling engine
+//   //    powered watch
+//   //    pumped laser
+//   //     roadway
+//   //     Spark Lighter
+//   //     still
+//   //     tree
+//   //     vehicle
+//   //     balloon
+//   //     boat
+//   //    Tûranor Planet
+//   //     bus
+//   //     car
+//   //    Stella ( vehicles)
+//   //     golf cart
+//   //     panels on spacecraft
+//   //     sail
+//   //     thermal rocket
+//   // ]
+// ];
+
+const categories =[
+    {id:1,description:'Solar Panels & Kits', hasChildren:true,subcategories:[{id:1,description:'Solar Panels & Kits',hasChildren:false}]},
+    {id:2,description:'Solar Power Accessories', hasChildren:false,subcategories:[]},
+    {id:3,description:'Solar Lighting', hasChildren:false,subcategories:[]},
+    {id:4,description:'Solar Water Heating Systems', hasChildren:false,subcategories:[]},
+    {id:5,description:'Solar-Powered Appliances',hasChildren:false,subcategories:[]},
+    {id:6,description:'Off-Grid Solar Solutions', hasChildren:true  ,subcategories:[{id:1,description:'Solar Panels & Kits',hasChildren:false}]}
+]
+
+const   NavBar = () => {
     return ( 
         <>
     <div className="container-fluid bg-dark mb-30">
@@ -10,24 +79,27 @@ const NavBar = () => {
                 <i className="fa fa-angle-down text-dark"></i>
                 </a>
                 <nav className="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style={{width: "calc(100% - 30px)", zIndex: "99"}}>
-                    <div className="navbar-nav w-100">
-                        <div className="nav-item dropdown dropright">
-                            <a href="#" className="nav-link dropdown-toggle" data-toggle="dropdown">Dresses <i className="fa fa-angle-right float-right mt-1"></i></a>
+                 <div className="navbar-nav w-100">
+                  <div className="nav-item dropdown dropright">
+                    {categories.map((item) => (
+                        <div key={item.id} className="nav-item dropdown dropright">
+                                <a href="#" className="nav-link dropdown-toggle" data-toggle="dropdown">
+                                    {item.description}
+                                    {item.subcategories.length > 0 && <i className="fa fa-angle-right float-right mt-1"></i>}
+                                </a>
+                            {item.subcategories.length > 0 && (
                             <div className="dropdown-menu position-absolute rounded-0 border-0 m-0">
-                                <a href="" className="dropdown-item">Men's Dresses</a>
-                                <a href="" className="dropdown-item">Women's Dresses</a>
-                                <a href="" className="dropdown-item">Baby's Dresses</a>
+                                    {item.subcategories.map((subitem) => (
+                                    <a key={subitem.id} href="#" className="dropdown-item">
+                                        {subitem.description}
+                                    </a>
+                                    ))}
                             </div>
-                        </div>
-                        <a href="" className="nav-item nav-link">Shirts</a>
-                        <a href="" className="nav-item nav-link">Jeans</a>
-                        <a href="" className="nav-item nav-link">Swimwear</a>
-                        <a href="" className="nav-item nav-link">Sleepwear</a>
-                        <a href="" className="nav-item nav-link">Sportswear</a>
-                        <a href="" className="nav-item nav-link">Jumpsuits</a>
-                        <a href="" className="nav-item nav-link">Blazers</a>
-                        <a href="" className="nav-item nav-link">Jackets</a>
-                        <a href="" className="nav-item nav-link">Shoes</a>
+                        )}
+                   </div>
+                ))}
+                  </div>
+                    
                     </div>
                 </nav>
             </div>
@@ -42,8 +114,9 @@ const NavBar = () => {
                     </button>
                     <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div className="navbar-nav mr-auto py-0">
-                                    <a href="/" className="nav-item nav-link active">Home</a>
-                            <a href="/shop" className="nav-item nav-link">Shop</a>
+                            <a href="/" className="nav-item nav-link active">Home</a>
+                            <a href="/sell" className="nav-item nav-link">Sell</a>
+                            <a href="/buy" className="nav-item nav-link">Buy</a>
                             <a href="/detail" className="nav-item nav-link">Shop Detail</a>
                             <div className="nav-item dropdown">
                                 <a href="#" className="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i className="fa fa-angle-down mt-1"></i></a>

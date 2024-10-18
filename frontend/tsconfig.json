@@ -1,12 +1,18 @@
 {
+  // "extends":"../tsconfig.base.json",
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "baseUrl": "./src",
-
+    "baseUrl": ".",
+    "esModuleInterop":true,
+    "types": ["node", "crypto-js"],
+    "paths": {
+      "@shared/*": ["../shared/*"],
+      "@services/*": ["./services/*"]
+    },
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -14,13 +20,13 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/services"],
+  // "include": ["src", "../shared", "../backend/utils/utils.ts"],
+  "include": ["src","../shared",],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
