@@ -1,11 +1,35 @@
 {
+  "extends": "../tsconfig.base.json",
+  // "ts-node": {
+  //   "transpileOnly": true,
+  //   "require": ["tsconfig-paths/register"]
+  // },
   "compilerOptions": {
-    "target": "es2017",
+    "target": "ES2020",
+    "module": "CommonJS",
+    "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
-    "module": "esnext"
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "sourceMap": true,
+    "noEmit": false,
+    "noEmitOnError": false,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": false,
+    "baseUrl": "./",
+    "moduleResolution": "Node",
+    "outDir":"./dist", // "../../dist",
+    "rootDir": "../" , // Root directory that contains all source files including shared
+    // "paths": {
+    //   "@shared/*": ["shared/*"],
+      
+    // },
   },
-  "include": ["/**/*.ts", "../frontend/src/index.ts"],
-
-  "ts-node": { "esm": true }
+  "include": ["./main-server/src/**/*.ts","../auth-server/src/**/*.ts","./prisma/*.ts"],
+  "exclude": ["node_modules"]
+  
+  
 }

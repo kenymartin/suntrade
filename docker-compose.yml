@@ -1,42 +1,58 @@
-version: '3.8'
+version: '3.9'
 
 services:
   frontend:
     build:
-      context: ./frontend
+      context: .
+      dockerfile: frontend/Dockerfile.frontend
     ports:
-      - "5273:80"
-    depends_on:
-      - main
-      - auth
+      - "3000:80"
+    volumes:
+      - ./frontend:/app/frontend
+      - ./shared:/app/shared
+    environment:
+      - NODE_ENV=development
 
-  main:
+  main-server:
     build:
-      context: ./backend/main-server
+      context: .
+      dockerfile: backend/main-server/Dockerfile
     ports:
-      - "3000:3000"
-    depends_on:
-      - db
+      - "3001:3000"
+    volumes:
+      - ./backend/main-server:/app
+      - ./shared:/app/shared
+    environment:
+      - NODE_ENV=development
 
-  auth:
+  auth-server:
     build:
-      context: ./backend/auth-server
+      context: .
+      dockerfile: backend/auth-server/Dockerfile
     ports:
-      - "3001:3001"
-    depends_on:
-      - db
+      - "3002:3000"
+    volumes:
+      - ./backend/auth-server:/app
+      - ./shared:/app/shared
+    environment:
+      - NODE_ENV=development
 
   db:
     image: postgres:14
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - DATABASE_URL=${DATABASE_URL}
+      - ACCESS_TOKEN_SECRECT=${ACCESS_TOKEN_SECRECT}
+      - REFRESH_TOKEN_SECRECT=${REFRESH_TOKEN_SECRECT}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      - ACCESS_TOKEN_SECRET_EXPIRES_IN=${ACCESS_TOKEN_SECRET_EXPIRES_IN}
+    
     volumes:
       - db_data:/var/lib/postgresql/data
 
 volumes:
   db_data:
-  
