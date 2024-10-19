@@ -9,6 +9,7 @@ interface String {
 interface Number {
     isEven(): boolean;
     isOdd(): boolean;
+    
 }
 interface Date {
     isToday(): boolean;

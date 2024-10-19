@@ -7,7 +7,7 @@ import { z } from "zod";
 
 //Define userSchema
 const userSchema = z.object({
-  username: z.string().min(3, { message: "username is required" }),
+  username: z.string().min(3, { message: "username is required"}),
   password: z.string().min(3, { message: "password is required" }),
 });
 
@@ -130,7 +130,7 @@ const Login = () => {
                       </h5>
                       <div data-mdb-input-init="" className="form-outline mb-4">
                         <input
-                         maxLength={10}
+                         maxLength={15}
                           onKeyUp={() => console.log(formvalues)}
                           autoComplete="current-username"
                           onBlur={handleBlur}
@@ -199,7 +199,15 @@ const Login = () => {
                         <Link to="/signup" style={{ color: "#393f81" }}>
                           Register here
                         </Link>
+                        {errors.password || errors.username ? (<>
+                        <p className="mb-5 pb-lg-2" style={{ color: "#393f81"}}>
+                        <Link to="/forgotpasswordlink" style={{ color: "#393f81" }}>
+                        Forgot password?
+                        </Link>
+                        </p>
+                        </>):<></> }
                       </p>
+                      
                       <a href="#!" className="small text-muted">
                         Terms of use.
                       </a>

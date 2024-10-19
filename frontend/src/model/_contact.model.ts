@@ -1,10 +1,10 @@
-import * as enums from "../../../backend/MainServer/shared/utils/enums";
+import * as enums from "@shared/utils/enums";
 
 export type Contact = {
   firstName: string;
   lastName: string;
-  stateId?: number;
-  accountTypeId: enums.AccountType;
+  stateId?: string;
+  accountTypeId?: enums.AccountType;
   user: {
     email: string;
     username: string;
@@ -26,5 +26,5 @@ export type Contact = {
   company?: {
     companyName: string;
     website: string;
-  };
+  }
 };
