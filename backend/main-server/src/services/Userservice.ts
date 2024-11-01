@@ -261,7 +261,7 @@ export class UserService implements IReadable<User>, IFilter<User> {
         );
       });
     } catch (error) {
-      return new Promise<boolean>((resolve, reject) => {
+      return new Promise<boolean>((_,reject) => {
         reject(error);
       });
     }

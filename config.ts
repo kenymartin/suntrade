@@ -19,9 +19,6 @@ interface Config {
     username: string
     userId: string
   }
-
-  //FRONTEND VARIABLES
-  frontendUrl: string
 }
 const config: Config = {
   //JWT VARIABLES
@@ -32,7 +29,7 @@ const config: Config = {
   },
   //SMTP VARIBALES
   smtpService: process.env.SMTP_SERVICE,
-  smtpUser: process.env.SMTP_USER,
+  smtpUser: process.env.SMTP_USER ?? 'kmartinrobles@gmail.com',
   smtpPassword: process.env.SMTP_PASSWORD,
   //DEVELOPERS VARIABLES
   
@@ -43,9 +40,7 @@ const config: Config = {
   currentUser:{
     userId:'',
     username:''
-  },
-  //FRONTEND VARIABLES
-  frontendUrl: process.env.FRONTEND_URL??'http://localhost:5173'
+  }
 };
 
 export default config;

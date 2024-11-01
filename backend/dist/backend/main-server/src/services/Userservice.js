@@ -236,7 +236,7 @@ class UserService {
             });
         }
         catch (error) {
-            return new Promise((resolve, reject) => {
+            return new Promise((_, reject) => {
                 reject(error);
             });
         }

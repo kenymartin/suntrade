@@ -44,7 +44,9 @@ const config = {
     currentUser: {
         userId: '',
         username: ''
-    }
+    },
+    //FRONTEND VARIABLES
+    frontendUrl: process.env.FRONTEND_URL ?? 'http://localhost:5173'
 };
 exports.default = config;
 //# sourceMappingURL=config.js.map

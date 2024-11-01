@@ -1,12 +1,8 @@
 import nodemailer from "nodemailer";
-// import  NotificationType  from "@shared/utils/enums.js";
-import IEmailOptions from "./interfaces/IEmailoptions.js";
 import config from "../../../config.js";
 import { NotificationType } from "../../../../shared/utils/enums.js";
-//import {encrypt} from "../../../../shared/utils/utils.js";
 import { backendEncryptionUtils } from "../../../utils/encryption.js";
 
-// import _ from "lodash";
 type app = {
   page: "confirm-registration" | "forgot-password";
 };
@@ -23,7 +19,7 @@ export class NotificationService {
   
   static async sendNotification(notificationType: NotificationType = NotificationType.Registration,emailOptions:any /*IEmailOptions*/,callback: (error: any, info: any) => void): Promise<boolean> {
     debugger
-    emailOptions.from = "kmartinrobles@gmail.com";
+    emailOptions.from = config.smtpUser
     const option = {
       id: emailOptions.key,
       isReactivation: notificationType == NotificationType.Reactivation,
@@ -33,11 +29,11 @@ export class NotificationService {
     const encriptedOpts =backendEncryptionUtils.encrypt(jsonOptions);
     //http://localhost:5173/confirm-registration?
     
-    const registrationUrl = `http://localhost:5173/{0}?opts=${encodeURIComponent(encriptedOpts)}`;
-    // const registrationUrl = `http://localhost:5173/confirm-registration?id=${encodeURIComponent(encryptedId)}&options?${encodeURIComponent(encriptedOpts)}`;
+    const url = `{${config.frontendUrl}/{0}?opts=${encodeURIComponent(encriptedOpts)}`;
+    // const url = `http://localhost:5173/confirm-registration?id=${encodeURIComponent(encryptedId)}&options?${encodeURIComponent(encriptedOpts)}`;
     const { subject, html } = this.getNotificationContent(
       notificationType,
-      registrationUrl
+      url
     );
     emailOptions.subject = subject;
     emailOptions.html = html;

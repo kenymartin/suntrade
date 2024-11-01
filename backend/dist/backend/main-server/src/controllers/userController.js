@@ -206,9 +206,19 @@ exports.checkUserName = checkUserName;
 const changePassword = async (req, res) => {
     debugger;
     try {
-        const { id, newPassword } = req.body;
-        const data = await service.ChangePassword(id, newPassword);
-        res.status(200).json({ data });
+        const { id, password } = req.body;
+        const result = await service.ChangePassword(id, password);
+        if (result instanceof Error) {
+            res.status(400).json({
+                message: result.message,
+            });
+        }
+        else {
+            res.status(200).json({
+                message: "password updated successfully!",
+                user: result,
+            });
+        }
     }
     catch (error) {
         console.log("Error changing password", error);

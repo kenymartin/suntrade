@@ -187,15 +187,23 @@ export class Contactservice implements IFilter<Contact>, ICrud<Contact> {
       html: "", // This will be set by the NotificationService
       key:this.result.id, // This will be set by the NotificationService/ This will be set by the NotificationService
     };
-    const callback = (error: any, info: any) => {
+    // const callback = (error: any, info: any) => {
+    //   if (error) {
+    //     console.error("Error sending email:", error);
+    //   } else {
+    //     console.log("Email sent successfully:");
+    //   }
+    // };
+    debugger
+    console.log("About to send an email")
+    await NotificationService.sendNotification(NotificationType.Registration, emailOptions,(error, info) =>{
+      console.log("Email sent successfully-------->")
       if (error) {
         console.error("Error sending email:", error);
       } else {
-        console.log("Email sent successfully:");
+        console.log("Email sent successfully...:");
       }
-    };
-    
-    await NotificationService.sendNotification(NotificationType.Registration, emailOptions, callback);
+    });
 
     return this.result;
   }

@@ -2,16 +2,35 @@ import  { useEffect, useState } from 'react';
 import UserService from 'src/services/user.service';
 import { useLocation} from 'react-router-dom';
 import { frontendEncryptionUtils } from 'src/utils/encryption';
+import schema from './auth/signup/schemas/FormSchema'
+import { z } from 'zod';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
-
+const changepassSchema =schema.userSchema.pick({password: true, confirmPassword: true});
+changepassSchema.superRefine((data,ctx)=>{
+  if (data.password !== data.confirmPassword) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Passwords do not match",
+      path: ["confirmPassword"],
+    });
+  }
+})
+type changePasswordProps =z.infer<typeof changepassSchema>;
 const ChangePassword = () => {
-    debugger
-//   const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [formvalues,setFormvalues]=useState<changePasswordProps>({password:'',confirmPassword:''});
+  const [error, setError] = useState<Partial<changePasswordProps>>({})
+  const validateField =(fieldName:keyof changePasswordProps,fieldValue:string)=>{
+  const fieldErrors={...error};
+    try{
+      changepassSchema.parse({[fieldName]:fieldValue})
+      fieldErrors[fieldName]='';
+    }catch(error:any){
+      fieldErrors[fieldName]=error.errors[0].message;
+    }
+    setError(fieldErrors);
+  }
   const [contactId, setContactId] =useState<string|null>(null);
-  const [error, setError] = useState<string|null>(null);
   const [message, setMessage] = useState('');
   const location = useLocation();
 
@@ -27,31 +46,57 @@ const ChangePassword = () => {
         setContactId(encryptedContactId);
         console.log('Contact ID:', encryptedContactId);
       } catch (error) {
-        setError('Invalid query parameters.');
+        console.log('Invalid query parameters.');
       }
     }
   }, [location.search]);
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
-    debugger
-    e.preventDefault();
-    if (newPassword !== confirmPassword) {
-      setMessage('New password and confirmation password do not match.');
-      return;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const fieldErrors = { ...error };
+      const { name, value } = e.target;
+      setFormvalues({ ...formvalues, [name]: value });
+      validateField(name as keyof changePasswordProps, value);
+      if (value.length >= 2) {
+        fieldErrors[name as keyof changePasswordProps] = "";
+        setError(fieldErrors);
+      }
+    } catch (error) {
+      console.log(error);
     }
-    // Add your password change logic here (API call or other handling)
+  }
+  const handleBlur =(e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    validateField(name as keyof changePasswordProps, value);
+    handleChange(e);
+  }
+  const handleSubmit = (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
+      const result = changepassSchema.safeParse(formvalues);
+      if (!result.success) {
+        const newErrors: Partial<changePasswordProps> = {};
+        result.error.errors.forEach((err) => {
+          newErrors[err.path[0] as keyof changePasswordProps] = err.message;
+          return;
+        });
+        setError(newErrors);
+      }
+    
     const Id = parseInt(contactId??'0', 10);
-
-    UserService.changePassword(Id, newPassword).then((result) => {
+    UserService.changePassword(Id,  formvalues.password).then((result) => {
         debugger
       if (result.status === 200) {
         setMessage(result.data.message??'');
       } else {
-        setError(result.data.message??'');
+        console.log(result.data.message??'');
       }
     }, (_err) => {
-      setError(`An error occurred while changing the password. :${error}`);
+      console.log(`An error occurred while changing the password. :${error}`);
     });
+    } catch (error) {
+      
+    }
   }
 
   return (
@@ -61,38 +106,47 @@ const ChangePassword = () => {
           <h2 className="text-center my-4">Change Password</h2>
           {message && <div className="alert alert-info">{message}</div>}
           <form onSubmit={handleSubmit}>
-            {/* <div className="form-group mb-3">
-              <label htmlFor="oldPassword">Old Password</label>
-              <input
-                type="password"
-                id="oldPassword"
-                className="form-control"
-                value={oldPassword}
-                onChange={(e) => setOldPassword(e.target.value)}
-                required
-              />
-            </div> */}
             <div className="form-group mb-3">
               <label htmlFor="newPassword">New Password</label>
               <input
+              maxLength={30}
                 type="password"
                 id="newPassword"
+                name='password'
                 className="form-control"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                value={formvalues.password}
+                onBlur={handleBlur}
+                onChange={handleChange}
                 required
               />
+                  {error.password && (
+            <div className="form-row mb-1">
+              <div className="col">
+                <span className="text-danger">{error.password}</span>
+              </div>
+            </div>
+          )}
             </div>
             <div className="form-group mb-3">
               <label htmlFor="confirmPassword">Confirm New Password</label>
               <input
+              maxLength={30}
                 type="password"
                 id="confirmPassword"
+                name='confirmPassword'
                 className="form-control"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={formvalues.confirmPassword}
+                onBlur={handleBlur}
+                onChange={handleChange}
                 required
               />
+              {error.confirmPassword && (
+            <div className="form-row mb-1">
+              <div className="col">
+                <span className="text-danger">{error.confirmPassword}</span>
+              </div>
+            </div>
+          )}
             </div>
             <button  type="submit" className="btn btn-primary w-100">
               Change Password

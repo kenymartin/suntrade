@@ -2,9 +2,11 @@
 
 interface String {
     toCapitalize(value: string): string;
-    toNumber(value: string): number;
+    toNumber(defaultvalue: number): number|undefined;
     toDate(value: string):Date;
     toBoolean(value: string): boolean;
+    tryParse<T>(): { value: T, success: boolean };
+    
 }
 interface Number {
     isEven(): boolean;
@@ -24,8 +26,9 @@ String.prototype.toCapitalize = function (): string {
     return this.valueOf().charAt(0).toUpperCase() + this.valueOf().slice(1);
 }
 
-String.prototype.toNumber = function (): number {
-    return parseInt(this.valueOf(), 10);
+String.prototype.toNumber = function (defaulvalue: number=0): number|undefined {
+    
+    return this.tryParse().success ? Number(this.valueOf()) : defaulvalue;
 }
 
 String.prototype.toDate = function (): Date {
@@ -35,7 +38,13 @@ String.prototype.toDate = function (): Date {
 String.prototype.toBoolean = function (): boolean {
     return this === "true";
 }
-
+String.prototype.tryParse = function <T>(): { value: T, success: boolean } {
+    try {
+      return { value: JSON.parse(this.valueOf()), success: true };
+    } catch (error) {
+      return { value: undefined as T, success: false };
+    }
+  }
 
 Number.prototype.isEven = function (): boolean {
     return this.valueOf() % 2 === 0;

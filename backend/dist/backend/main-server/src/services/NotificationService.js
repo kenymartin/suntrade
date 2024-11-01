@@ -7,7 +7,6 @@ exports.NotificationService = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const config_js_1 = __importDefault(require("../../../config.js"));
 const enums_js_1 = require("../../../../shared/utils/enums.js");
-//import {encrypt} from "../../../../shared/utils/utils.js";
 const encryption_js_1 = require("../../../utils/encryption.js");
 const transporter = nodemailer_1.default.createTransport({
     service: config_js_1.default.smtpService,
@@ -19,7 +18,7 @@ const transporter = nodemailer_1.default.createTransport({
 class NotificationService {
     static async sendNotification(notificationType = enums_js_1.NotificationType.Registration, emailOptions /*IEmailOptions*/, callback) {
         debugger;
-        emailOptions.from = "kmartinrobles@gmail.com";
+        emailOptions.from = config_js_1.default.smtpUser;
         const option = {
             id: emailOptions.key,
             isReactivation: notificationType == enums_js_1.NotificationType.Reactivation,
@@ -27,9 +26,9 @@ class NotificationService {
         const jsonOptions = JSON.stringify(option);
         const encriptedOpts = encryption_js_1.backendEncryptionUtils.encrypt(jsonOptions);
         //http://localhost:5173/confirm-registration?
-        const registrationUrl = `http://localhost:5173/{0}?opts=${encodeURIComponent(encriptedOpts)}`;
-        // const registrationUrl = `http://localhost:5173/confirm-registration?id=${encodeURIComponent(encryptedId)}&options?${encodeURIComponent(encriptedOpts)}`;
-        const { subject, html } = this.getNotificationContent(notificationType, registrationUrl);
+        const url = `{${config_js_1.default.frontendUrl}/{0}?opts=${encodeURIComponent(encriptedOpts)}`;
+        // const url = `http://localhost:5173/confirm-registration?id=${encodeURIComponent(encryptedId)}&options?${encodeURIComponent(encriptedOpts)}`;
+        const { subject, html } = this.getNotificationContent(notificationType, url);
         emailOptions.subject = subject;
         emailOptions.html = html;
         try {
