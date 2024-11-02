@@ -2,32 +2,38 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "devstart": "nodemon servery.ts",
-    "devstartauth": "nodemon authServer.ts",
-    "devtesting": "nodemon testing.ts"
+    "build:auth-server": "npm run build --prefix ./auth-server",
+    "build:main-server": "npm run build --prefix ./main-server",
+    "build": "npm run build:auth-server && npm run build:main-server",
+    "start:auth-server": "npm start --prefix ./auth-server",
+    "start:main-server": "npm start --prefix ./main-server",
+    "start": "npm run start:auth-server && npm run start:main-server",
+    "dev:auth-server": "npm run dev --prefix ./auth-server",
+    "dev:main-server": "npm run dev --prefix ./main-server",
+    "dev": "npm run dev:auth-server && npm run dev:main-server"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
-    "@prisma/client": "^5.4.1",
+    "@prisma/client": "^5.18.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/lodash": "^4.14.198",
     "@types/react": "^18.2.39",
     "@types/react-dom": "^18.2.17",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.5",
     "esm": "^3.2.25",
-    "express": "^4.18.2",
-    "express-rate-limit": "^7.1.1",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.1",
     "git": "^0.1.5",
     "joi": "^17.9.2",
-    "jsonwebtoken": "^9.0.1",
+    "jsonwebtoken": "^9.0.2",
     "loadash": "^1.0.0",
     "moment": "^2.29.4",
     "node-inspect": "^2.0.0",
@@ -37,11 +43,13 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
-    "@types/cors": "^2.8.13",
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
-    "@types/jsonwebtoken": "^9.0.2",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/nodemailer": "^6.4.9",
     "nodemon": "^2.0.22",
-    "prisma": "^5.4.1"
+    "prisma": "^5.18.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
   }
 }

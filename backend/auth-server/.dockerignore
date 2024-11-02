@@ -1,7 +1,11 @@
 node_modules
 dist
 .env
-.git
-.gitignore
 Dockerfile
 docker-compose.yml
+.git
+ignore
+README.md
+LICENSE
+package.json
+package-lock.json

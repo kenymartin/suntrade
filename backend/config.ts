@@ -3,27 +3,30 @@ dotenv.config();
 
 interface Config {
   //JWT VARIABLES
-  jwSecrect: string;
-  jwExpiredIn: string;
-  refreshTokenSecret(): string;
+  jwSecrect: string|any;
+  jwExpiredIn?: string;
+  refreshTokenSecret(): string|undefined;
   ///SMTP VARIBALES
-  smtpService: string;
-  smtpUser: string;
-  smtpPassword: string;
+  smtpService?: string;
+  smtpUser?: string;
+  smtpPassword?: string;
   //DEVELOPERS VARIABLES
-  noficationEmail: {
-    Me: string;
-    All: string|string[]
-  };
+  // noficationEmail?: {
+  //   Me: string|any,
+  //   All?: string|string[]
+  // };
   currentUser:{
     username: string
     userId: string
   }
+
+  //FRONTEND VARIABLES
+  frontendUrl: string
 }
 const config: Config = {
   //JWT VARIABLES
   jwSecrect: process.env.ACCESS_TOKEN_SECRECT,
-  jwExpiredIn: "20m",
+  jwExpiredIn:process.env.ACCESS_TOKEN_SECRET_EXPIRES_IN,
   refreshTokenSecret() {
     return process.env.REFRESH_TOKEN_SECRECT;
   },
@@ -32,14 +35,17 @@ const config: Config = {
   smtpUser: process.env.SMTP_USER,
   smtpPassword: process.env.SMTP_PASSWORD,
   //DEVELOPERS VARIABLES
-  noficationEmail: {
-    Me: process.env.NOFICATION_EMAIL_ME,
-    All: process.env.NOFICATION_EMAIL_ALL.split(';'),
-  },
+  
+  // noficationEmail: {
+  //   Me: process.env.NOTIFICATION_EMAIL_ME ??'default@example.com',
+  //   // All: process.env.NOFICATION_EMAIL_ALL?.split(';'),
+  // },
   currentUser:{
     userId:'',
     username:''
-  }
+  },
+  //FRONTEND VARIABLES
+  frontendUrl: process.env.FRONTEND_URL??'http://localhost:5173'
 };
 
 export default config;

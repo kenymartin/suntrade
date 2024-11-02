@@ -1,15 +1,22 @@
 // import { z } from "zod";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import UserService from "src/services/user.service";
 
 const ForgotPasswordLink = () => {
   const emailRef = useRef<HTMLInputElement>(null);
+  const [message,setMessage] =useState("");
+
+  const handleBlur = (e: React.FocusEvent) => {
+    setMessage("");
+  }
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(emailRef.current?.value)
-    if (emailRef.current==null || emailRef.current.value === "")
+    if (emailRef.current==null || emailRef.current.value === ""){
+      setMessage("Please enter your email address.");
       return alert("Please enter your email address.");
+  }
     UserService.ForgotPasswordLink(emailRef.current.value)
       .then((response) => {
         if (response.status === 200) {
@@ -22,10 +29,17 @@ const ForgotPasswordLink = () => {
         console.error(error);
       });
   };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  
+  }
+  const handleFocus = (e: React.FocusEvent) => {
+    setMessage("");
+    
+  }
   return (
-    <div className="container" style={{ minHeight: "100vh", marginTop: "3%" }}>
-      <div className="row">
-        <div className="col-md-4 col-md offset-4">
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
           <div className="panel panel-default">
             <div className="panel-body">
               <div className="text-center">
@@ -54,20 +68,26 @@ const ForgotPasswordLink = () => {
                           placeholder="email address"
                           className="form-control"
                           type="email"
-                       
+                          onChange={()=>handleChange}
+                          onFocus={()=>handleFocus}
+                          onBlur={()=>handleBlur}
                         />
                       </div>
-                        {}
+                      {
+                        message && <div className="alert alert-danger">{message}</div>
+                      }
                     </div>
-                    <div className="form-group">
-                      <button
-                        onClick={handleSubmit}
-                        name="recover-submit"
-                        className="btn btn-dark btn-lg btn-block"
-                        value="Reset Password"
-                        type="submit"
-                      />
-                    </div>
+
+                    <button
+                      onClick={handleSubmit}
+                      data-mdb-ripple-color="dark"
+                      data-mdb-button-init=""
+                      data-mdb-ripple-init=""
+                      className="btn btn-dark btn-lg btn-block"
+                      type="submit"
+                    >
+                      Submit
+                    </button>
 
                     {/* <input type="hidden" className="hide" name="token" id="token" value=""/>  */}
                   </form>

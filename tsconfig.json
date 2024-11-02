@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    // "module": "ESNext"
+  },
+  "files": [],
+  "references": [
+    { "path": "./shared" },
+    { "path": "./backend/main-server" },
+    { "path": "./backend/auth-server" }
+  ]
+}

@@ -4,7 +4,17 @@ const userSchema = z.object({
     username: z
       .string()
       .min(3, { message: "Username is required" })
-      .max(20, { message: "Username must be at most 20 characters" })
+      .max(20, { message: "Username must be at most 20 characters" }),
+      password: z
+      .string()
+      .min(8, { message: "Password is required" })
+      .max(20, { message: "Password must be at most 20 characters long" }),
+    confirmPassword: z
+      .string()
+      .min(8, { message: "Confirm Password is required" })
+      .max(20, {
+        message: "Confirm Password must be at most 20 characters long",
+      })
       .refine((val) => !val.includes(" "), {
         message: "Username cannot contain spaces",
       }),
@@ -20,16 +30,6 @@ const userSchema = z.object({
         .min(5, { message: "Email is required" })
         .email({ message: "Invalid email address" })
         .max(254, { message: "Email must be at most 254 characters" }), // Email validation
-      password: z
-        .string()
-        .min(8, { message: "Password is required" })
-        .max(128, { message: "Password must be at most 128 characters long" }),
-      confirmPassword: z
-        .string()
-        .min(8, { message: "Confirm Password is required" })
-        .max(128, {
-          message: "Confirm Password must be at most 128 characters long",
-        }),
       termsofUser: z.boolean().refine((val) => val, {
         message: "You must agree to the terms and conditions",
       }),
@@ -54,5 +54,6 @@ const userSchema = z.object({
     });
   
     export default {
-     signupSchema
+     signupSchema,
+     userSchema
     }

@@ -3,7 +3,7 @@ dotenv.config();
 
 interface Config {
   //JWT VARIABLES
-  jwSecrect?: string;
+  jwSecrect: string|any;
   jwExpiredIn: string;
   refreshTokenSecret(): string|undefined;
   ///SMTP VARIBALES
@@ -11,10 +11,10 @@ interface Config {
   smtpUser?: string;
   smtpPassword?: string;
   //DEVELOPERS VARIABLES
-  noficationEmail: {
-    Me?: string;
-    All?: string|string[]|undefined
-  };
+  // noficationEmail?: {
+  //   Me: string|any,
+  //   All?: string|string[]
+  // };
   currentUser:{
     username: string
     userId: string
@@ -32,10 +32,11 @@ const config: Config = {
   smtpUser: process.env.SMTP_USER,
   smtpPassword: process.env.SMTP_PASSWORD,
   //DEVELOPERS VARIABLES
-  noficationEmail: {
-    Me: process.env.NOFICATION_EMAIL_ME,
-    All: process.env.NOFICATION_EMAIL_ALL.split(';'),
-  },
+  
+  // noficationEmail: {
+  //   Me: process.env.NOTIFICATION_EMAIL_ME ??'default@example.com',
+  //   // All: process.env.NOFICATION_EMAIL_ALL?.split(';'),
+  // },
   currentUser:{
     userId:'',
     username:''

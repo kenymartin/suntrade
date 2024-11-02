@@ -1,0 +1,11 @@
+{
+    "extends": "../tsconfig.base.json",
+    "compilerOptions": {
+      "outDir": "../dist/shared",
+      "rootDir": ".",
+      "composite": true,
+      "module": "ESNext",
+      
+    },
+    "include": ["**/*"]
+  }
