@@ -13,7 +13,6 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    
     "noEmit": false,
     "noEmitOnError": false,
     "noImplicitAny": true,
@@ -23,12 +22,12 @@
     "moduleResolution": "Node",
     "outDir":"../dist", // "../../dist",
     "rootDir": "../../" , // Root directory that contains all source files including shared
-    // "paths": {
-    //   "@shared/*": ["shared/*"],
+    "paths": {
+      "@shared/*": ["../../shared/*"],
+      "@backend/*": ["../../backend/*"],
       
-    // },
+    },
   },
   "include": ["src/**/*.ts","../prisma/*.prisma"]
-  
   
 }

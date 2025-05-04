@@ -3,10 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const contactController_js_1 = __importDefault(require("../controllers/contactController.js"));
-const joi_1 = __importDefault(require("joi"));
-const contactRoute = express_1.default.Router();
+var express_1 = __importDefault(require("express"));
+var contactController_js_1 = __importDefault(require("../controllers/contactController.js"));
+var joi_1 = __importDefault(require("joi"));
+var contactRoute = express_1.default.Router();
 contactRoute.get("/filter", contactController_js_1.default.getWithFilter);
 contactRoute.post("/register", /*validateScheme,*/ contactController_js_1.default.register);
 contactRoute.get("/", contactController_js_1.default.getContacts);
@@ -14,8 +14,8 @@ contactRoute.get("/:id", contactController_js_1.default.getContact);
 contactRoute.patch("/:id", contactController_js_1.default.updateContact);
 function validateScheme(req, res, next) {
     debugger;
-    const { contact } = req.body.data;
-    const schema = joi_1.default.object({
+    var contact = req.body.data.contact;
+    var schema = joi_1.default.object({
         contact: {
             firstname: joi_1.default.string().min(3).required(),
             lastname: joi_1.default.string().min(3).required(),
@@ -49,7 +49,7 @@ function validateScheme(req, res, next) {
             }),
         },
     });
-    const { error } = schema.validate({ contact });
+    var error = schema.validate({ contact: contact }).error;
     if (error) {
         return res
             .status(400)

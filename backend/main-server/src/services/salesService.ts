@@ -1,7 +1,7 @@
 import ICrud from "./interfaces/ICrud";
 import { Sales, PrismaClient } from "@prisma/client";
 import { ResultError } from "../../../../backend/utils/utils";
-
+//import { ResultError } from "@backend/utils/utils";
 const prisma = new PrismaClient();
 
 export class SalesService implements ICrud<Sales> {

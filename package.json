@@ -4,19 +4,33 @@
   "description": "",
   "main": "index.js",
   "prisma": {
-    "schema": "dist/backend/main-server/src/orm/prisma/schema.prisma"
+    "schema": "./prisma/schema.prisma"
   },
   "scripts": {
-    "build": "tsc -w && npx prisma generate --schema=backend/main-server/src/orm/prisma/schema.prisma",
-    "prisma:generate": "npx prisma generate --schema=backend/main-server/src/orm/prisma/schema.prisma"
+    "build:auth-server": "npm run build --prefix ./auth-server",
+    "build:main-server": "npm run build --prefix ./main-server",
+    "build": "npm run build:auth-server && npm run build:main-server",
+    "start:auth-server": "npm start --prefix ./auth-server",
+    "start:main-server": "npm start --prefix ./main-server",
+    "start": "npm run start:auth-server && npm run start:main-server",
+    "dev:auth-server": "npm run dev --prefix ./auth-server",
+    "dev:main-server": "npm run dev --prefix ./main-server",
+    "dev-xxx": "npm run dev:auth-server && npm run dev:main-server",
+    "auth-server": "npm start --prefix ./auth-server",
+    "main-server": "npm start --prefix ./main-server",
+    "start:all-servers":"npm start --prefix ./auth-server"
+    
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.17.0",
+    "@redis/client": "^1.6.0",
+    "@tanstack/react-query": "^5.59.16",
+    "@tanstack/react-query-devtools": "^5.59.16",
+    "@types/nodemailer": "^6.4.17",
     "axios": "^1.7.3",
-    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.5",
@@ -26,13 +40,16 @@
     "nodemon": "^3.1.4",
     "prisma": "^5.17.0",
     "react-bootstrap": "^2.10.4",
-    "react-query": "^3.39.3",
-    "react-query-devtools": "^2.6.3",
     "redis": "^4.6.15"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
-    "@types/jsonwebtoken": "^9.0.6",
-    "@types/react-bootstrap": "^0.32.36"
+    "@types/jsonwebtoken": "^9.0.8",
+    "@types/node": "^22.8.6",
+    "@types/react-bootstrap": "^0.32.36",
+    "bcrypt": "^5.1.1",
+    "joi": "^17.13.3",
+    "typescript": "^5.6.3"
   }
 }

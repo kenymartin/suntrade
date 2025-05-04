@@ -33,6 +33,7 @@ export class UserService implements IReadable<User>, IFilter<User> {
     return this.result;
   }
   getById(id: string): Promise<User> {
+    debugger
     try {
       this.result = prisma.user.findUnique({
         where: { id: id, isActive: true },

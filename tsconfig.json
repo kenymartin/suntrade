@@ -4,8 +4,8 @@
   },
   "files": [],
   "references": [
-    { "path": "./shared" },
-    { "path": "./backend/main-server" },
-    { "path": "./backend/auth-server" }
+    { "path": "shared" },
+    { "path": "backend/main-server" },
+    { "path": "backend/auth-server" }
   ]
 }

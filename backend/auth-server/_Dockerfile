@@ -1,0 +1,32 @@
+# Use an official Node.js runtime as a parent image
+FROM node:16
+
+# Set the working directory in the container
+WORKDIR /suntrade
+# Copy the base tsconfig to maintain the relative path
+COPY /tsconfig.base.json /tsconfig.base.json
+COPY /shared/utils/ /shared/utils/
+# Copy package.json and package-lock.json
+COPY /backend/auth-server/package*.json ./
+
+# Copy the tsconfig.json from auth-server
+COPY /backend/auth-server/tsconfig.json ./
+COPY /backend/tsconfig.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY /backend/dist/backend/auth-server .
+
+# Build the application (assumes your build command is defined in package.json)
+RUN npm run build
+
+# Check the output directory
+RUN ls -R /suntrade/backend/dist/auth-server
+
+# Expose the port the app runs on
+EXPOSE 3001
+
+# Command to run the application
+CMD ["node", "../dist/backend/auth-server/src/server.js"]

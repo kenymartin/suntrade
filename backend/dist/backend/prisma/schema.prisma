@@ -1,0 +1,447 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Address {
+  id            Int       @id @default(autoincrement())
+  street        String?
+  city          String?
+  state         String?
+  country       String?
+  isPrimary     Boolean?  @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime?
+  isActive      Boolean?  @default(true)
+  updatedBy     String?
+  isDeleted     Boolean?  @default(false)
+  addressTypeId Int       @default(100)
+  createdBy     String?
+  isPrivate     Boolean   @default(false)
+  contactId     Int
+  zipcode       String?
+  Contact       Contact   @relation(fields: [contactId], references: [id])
+}
+
+model Card {
+  id             Int      @id @default(autoincrement())
+  cardTypeId     Int
+  userId         Int      @unique
+  cardNumber     String
+  expirationDate DateTime
+  CVV            String
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  createdBy      String
+  updatedAt      DateTime @default(now())
+  updatedBy      String?
+  isDeleted      Boolean  @default(false)
+  isDefault      Boolean  @default(false)
+  contactId      Int?
+  Contact        Contact? @relation(fields: [contactId], references: [id])
+}
+
+model Cart {
+  id           Int      @id @default(autoincrement())
+  userId       String
+  solarPanelId Int
+  quantity     Int
+  contactId    Int?
+  Contact      Contact? @relation(fields: [contactId], references: [id])
+
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  categoryId  Int?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime
+  updatedBy   String?
+  isDeleted   Boolean   @default(false)
+  
+}
+
+model Company {
+  companyName String
+  website     String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime? @default(now())
+  updatedBy   String?
+  isDeleted   Boolean?  @default(false)
+  id          Int       @id @default(autoincrement())
+  contactId   Int       @unique
+  Contact     Contact   @relation(fields: [contactId], references: [id])
+}
+
+model Component {
+  id                     Int                      @id @default(autoincrement())
+  description            String
+  lenght                 Float?
+  width                  Float?
+  isActive               Boolean                  @default(true)
+  createdAt              DateTime                 @default(now())
+  createdBy              String?
+  updatedAt              DateTime
+  updatedBy              String?
+  isDeleted              Boolean                  @default(false)
+  componentTypeId        String?                  @unique
+  productPriceId         String?
+  //ComponentsBySolarPanel ComponentsByProduct[]
+}
+
+model ComponentType {
+  id              String   @id
+  description     String
+  createdAt       DateTime @default(now())
+  createdBy       String?
+  isActive        Boolean  @default(true)
+  isDeleted       Boolean  @default(false)
+  packagingTypeId Int
+  updatedAt       DateTime @default(now())
+  updatedBy       String?
+}
+
+model ComponentsByProduct {
+  id           Int        @id @default(autoincrement())
+  productId Int?
+  componentId  Int?
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  createdBy    String?
+  updatedAt    DateTime   @default(now())
+  updatedBy    String?
+  isDeleted    Boolean    @default(false)
+  quantity     Decimal
+
+}
+
+model Contact {
+  id             Int       @id @default(autoincrement())
+  firstname      String
+  lastname       String
+  dob            DateTime?
+  stateId        String?
+  createdAt      DateTime  @default(now())
+  createdBy      String?
+  isActive       Boolean   @default(true)
+  isDeleted      Boolean?  @default(false)
+  middlename     String?
+  positionTypeId Int?      @default(100)
+  updatedAt      DateTime? @default(now())
+  updatedBy      String?
+  accountTypeId  Int       @default(200)
+  Address        Address[]
+  Card           Card[]
+  Cart           Cart[]
+  Company        Company[]
+  Email          Email?
+  Phone          Phone[]
+  User           User?
+  // @@map("contact")
+}
+
+model Email {
+  id          Int       @id @default(autoincrement())
+  email       String
+  emailTypeId Int
+  isPrimary   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime? @default(now())
+  updatedBy   String?
+  isDeleted   Boolean?  @default(false)
+  contactId   Int       @unique
+  Contact     Contact   @relation(fields: [contactId], references: [id])
+}
+
+model Inventory {
+  id              String   @id
+  productId       Int
+  SKU             String   @unique
+  productName     String   @unique
+  description     String?
+  quantityInStock Int
+  unitPrice       Decimal  @db.Decimal(10, 2)
+  discount        Decimal? @db.Decimal(5, 2)
+  categoryId      Int
+  supplierId      Int
+}
+
+model Measurement {
+  id        Int      @id @default(autoincrement())
+  length    Float
+  width     Float
+  orderId   Int
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @default(now())
+  updatedBy String?
+  isDeleted Boolean  @default(false)
+
+  @@index([orderId])
+}
+
+model Order {
+  id            String         @id @default(uuid())
+  title         String
+  userId        String
+  orderStatusId Int            @unique
+  isActive      Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  createdBy     String?
+  updatedAt     DateTime       @default(now())
+  updatedBy     String?
+  isDeleted     Boolean        @default(false)
+  orderDate     DateTime
+  toTalPrice    Decimal
+  OrderStatus   OrderStatus    @relation(fields: [orderStatusId], references: [id])
+  User          User           @relation(fields: [userId], references: [id])
+  OrderDetails  OrderDetails[]
+  Payment       Payment?
+  Sales         Sales[]
+  ShippingInfo  ShippingInfo[]
+ 
+
+  @@index([userId])
+}
+
+model OrderDetails {
+  id           Int      @id @unique @default(autoincrement())
+  quanity      Int @map("quanity")
+  productId    Int @map("productId")
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  createdBy    String?
+  updatedAt    DateTime @default(now())
+  updatedBy    String?
+  isDeleted    Boolean  @default(false)
+  orderId      String
+  Order        Order    @relation(fields: [orderId], references: [id])
+  Product Product @relation(fields: [productId], references: [id])
+
+  @@unique([orderId, productId])
+}
+
+model OrderStatus {
+  id          Int      @id @default(autoincrement())
+  Description String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  createdBy   String?
+  updatedAt   DateTime @default(now())
+  updatedBy   String?
+  isDeleted   Boolean  @default(false)
+  Order       Order?
+}
+
+model Payment {
+  id              String          @id @default(uuid())
+  amount          Float
+  isActive        Boolean         @default(true)
+  createdAt       DateTime        @default(now())
+  createdBy       String?
+  updatedAt       DateTime        @default(now())
+  updatedBy       String?
+  isDeleted       Boolean         @default(false)
+  paymentMethodId Int
+  paymentStatusId Int?
+  orderId         String          @unique
+  Order           Order           @relation(fields: [orderId], references: [id])
+  PaymentStatus   PaymentStatus?  @relation(fields: [paymentStatusId], references: [id])
+  PaymentDetail   PaymentDetail[]
+}
+
+model PaymentDetail {
+  id        Int      @id @default(autoincrement())
+  paymentId String
+  orderId   String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @default(now())
+  updatedBy String?
+  isDeleted Boolean  @default(false)
+  Payment   Payment  @relation(fields: [paymentId], references: [id])
+}
+
+model PaymentStatus {
+  id          Int       @id @default(autoincrement())
+  description String
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime  @default(now())
+  updatedBy   String?
+  isDeleted   Boolean   @default(false)
+  Payment     Payment[]
+}
+
+model Phone {
+  id          Int      @id @default(autoincrement())
+  phone       String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  createdBy   String?
+  updatedAt   DateTime @default(now())
+  updatedBy   String?
+  isDeleted   Boolean  @default(false)
+  phoneTypeId Int      @default(100)
+  isPrimary   Boolean  @default(false)
+  contactId   Int
+  Contact     Contact  @relation(fields: [contactId], references: [id])
+}
+
+model ProductPrice {
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  createdBy String?
+  price     Decimal
+  productId Int
+  id        Int      @id @default(autoincrement())
+  Product   Product  @relation(fields: [productId], references: [id])
+}
+
+
+
+model ProductView {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  createdBy String?
+  Product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Role {
+  id          Int          @id @default(autoincrement())
+  description String
+  createdAt   DateTime     @default(now())
+  createdBy   String?
+  updatedAt   DateTime?    @default(now())
+  updatedBy   String?
+  isDeleted   Boolean?     @default(false)
+  isActive    Boolean      @default(true)
+  RoleByUser  RoleByUser[]
+}
+
+model RoleByUser {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  roleId    Int
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @default(now())
+  updatedBy String?
+  isDeleted Boolean  @default(false)
+  Role      Role     @relation(fields: [roleId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, roleId])
+}
+
+model Sales {
+  id           String    @id
+  productId Int @map("solarPanelId")
+  quantitySold Int       @default(0)
+  unitPrice    Decimal   @default(0.00)
+  discount     Decimal   @default(0.00)
+  totalAmount  Decimal   @default(0.00)
+  createdAt    DateTime  @default(now())
+  createdBy    String?
+  isDeleted    Boolean?  @default(false)
+  updatedAt    DateTime? @default(now())
+  updatedBy    String?
+  orderId      String
+  Order        Order     @relation(fields: [orderId], references: [id])
+ 
+}
+
+model ShippingInfo {
+  id                   Int    @id @default(autoincrement())
+  recipientName        String
+  address              String
+  city                 String
+  state                String
+  postalCode           String
+  shippingCarrrierName String
+  reviewId             Int
+  rating               Float
+  orderId              String
+  Order                Order  @relation(fields: [orderId], references: [id])
+}
+
+model Product {
+  id                     Int                      @id @default(autoincrement())
+  description            String
+  isActive               Boolean                  @default(true)
+  createdAt              DateTime                 @default(now())
+  createdBy              String?
+  updatedAt              DateTime                 @default(now())
+  updatedBy              String?
+  isDeleted              Boolean                  @default(false)
+  imageUrl               String
+  productPriceId         String?
+  typeId                 Int
+  ProductRatings      ProductRatings[]
+  ProductReviews      ProductReviews[]
+  ProductView         ProductView[]
+
+  @@map("Product")
+  ProductPrice ProductPrice[]
+  OrderDetails OrderDetails[]
+}
+
+model ProductRatings {
+  id           Int      @unique @default(autoincrement())
+  userId       String
+  solarPanelId Int
+  retingDate   DateTime @default(now())
+  SolarPanel   Product  @relation(fields: [solarPanelId], references: [id])
+  User         User     @relation(fields: [userId], references: [id])
+
+  @@map("ProductRatings")
+}
+
+model ProductReviews {
+  id           Int      @id @default(autoincrement())
+  userId       String
+  productId Int @map("productId")
+  reviewDate   DateTime @default(now())
+  reviewText   String
+  Product   Product  @relation(fields: [productId], references: [id])
+  User         User     @relation(fields: [userId], references: [id])
+  @@map("ProductReviews")
+}
+
+
+
+model User {
+  id             String           @id @default(uuid())
+  createdAt      DateTime         @default(now())
+  createdBy      String?
+  email          String           @unique
+  isActive       Boolean          @default(false)
+  isDeleted      Boolean          @default(false)
+  password       String?
+  updatedAt      DateTime         @default(now())
+  updatedBy      String?
+  username       String           @unique
+  contactId      Int              @unique
+  Order          Order[]
+  RoleByUser     RoleByUser[]
+  ProductRatings ProductRatings[]
+  ProductReviews ProductReviews[]
+  Contact        Contact          @relation(fields: [contactId], references: [id])
+}

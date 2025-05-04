@@ -14,24 +14,25 @@
     "start": "npm run start:auth-server && npm run start:main-server",
     "dev:auth-server": "npm run dev --prefix ./auth-server",
     "dev:main-server": "npm run dev --prefix ./main-server",
-    "dev": "npm run dev:auth-server && npm run dev:main-server"
+    "dev": "npm run dev:auth-server && npm run dev:main-server",
+    "start:all-servers": "concurrently --kill-others --names auth-server,main-server \"npm start --prefix ./auth-server\" \"npm start --prefix ./main-server\" && echo '✅ All servers are running'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.18.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/lodash": "^4.14.198",
     "@types/react": "^18.2.39",
     "@types/react-dom": "^18.2.17",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "esm": "^3.2.25",
     "express": "^4.19.2",
     "express-rate-limit": "^7.4.1",
     "git": "^0.1.5",
+    "ioredis": "^5.6.0",
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.2",
     "loadash": "^1.0.0",
@@ -39,17 +40,20 @@
     "node-inspect": "^2.0.0",
     "nodemailer": "^6.9.4",
     "react-router-dom": "^6.20.0",
-    "redis": "^4.6.8"
+    "redis": "^4.6.8",
+    "redis-cli": "^2.1.2"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
+    "@prisma/client": "^6.5.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
-    "@types/jsonwebtoken": "^9.0.6",
-    "@types/nodemailer": "^6.4.9",
+    "@types/jsonwebtoken": "^9.0.8",
+    "@types/nodemailer": "^6.4.17",
+    "bcrypt": "^5.1.1",
     "nodemon": "^2.0.22",
-    "prisma": "^5.18.0",
+    "prisma": "^6.5.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.3"
+    "typescript": "^5.8.2"
   }
 }

@@ -6,8 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResultError = void 0;
 exports.generateSecretKey = generateSecretKey;
 exports.pushElement = pushElement;
-const crypto_1 = __importDefault(require("crypto"));
-function generateSecretKey(size = 64) {
+var crypto_1 = __importDefault(require("crypto"));
+function generateSecretKey(size) {
+    if (size === void 0) { size = 64; }
     return crypto_1.default.randomBytes(size).toString("hex");
 }
 /**
@@ -20,14 +21,15 @@ function pushElement(target, source) {
     try {
         if (!source)
             return;
-        for (const element of source) {
+        for (var _i = 0, source_1 = source; _i < source_1.length; _i++) {
+            var element = source_1[_i];
             if (element instanceof Object && !(element instanceof Array)) {
                 target.push(element);
             }
         }
     }
     catch (error) {
-        throw new Error(`Error pushing element to target array: ${error}`);
+        throw new Error("Error pushing element to target array: ".concat(error));
     }
     return target.length;
 }
@@ -46,32 +48,34 @@ exports.default = Object.defineProperty(String.prototype, "ToInt", {
 /**
  * Static class for handling service error
  */
-class ResultError {
-    static TriedGetOne(name) {
-        throw new Error(`An error ocurred while trying to fetch the ${name}`);
+var ResultError = /** @class */ (function () {
+    function ResultError() {
     }
-    static TriedActiveUser(name) {
-        throw new Error(`An error ocurred while trying to activate the ${name}`);
-    }
-    static TriedGetMany(name) {
-        throw new Error(`An error ocurred while trying to fetch the ${name}s`);
-    }
-    static TriedUpdateOne(name) {
-        throw new Error(`An error ocurred while trying to update the ${name}`);
-    }
-    static TriedUpdateMany(name) {
-        throw new Error(`An error ocurred while trying to update the ${name}s`);
-    }
-    static TriedCreateOne(name) {
-        throw new Error(`An error ocurred while trying to create the ${name}`);
-    }
-    static TriedCreateMany(name) {
-        throw new Error(`An error ocurred while trying to fetch the ${name}s`);
-    }
-    static TriedDeleteOne(name) {
-        throw new Error(`An error ocurred while trying to delete the ${name}`);
-    }
-    static Nofity(info) {
+    ResultError.TriedGetOne = function (name) {
+        throw new Error("An error ocurred while trying to fetch the ".concat(name));
+    };
+    ResultError.TriedActiveUser = function (name) {
+        throw new Error("An error ocurred while trying to activate the ".concat(name));
+    };
+    ResultError.TriedGetMany = function (name) {
+        throw new Error("An error ocurred while trying to fetch the ".concat(name, "s"));
+    };
+    ResultError.TriedUpdateOne = function (name) {
+        throw new Error("An error ocurred while trying to update the ".concat(name));
+    };
+    ResultError.TriedUpdateMany = function (name) {
+        throw new Error("An error ocurred while trying to update the ".concat(name, "s"));
+    };
+    ResultError.TriedCreateOne = function (name) {
+        throw new Error("An error ocurred while trying to create the ".concat(name));
+    };
+    ResultError.TriedCreateMany = function (name) {
+        throw new Error("An error ocurred while trying to fetch the ".concat(name, "s"));
+    };
+    ResultError.TriedDeleteOne = function (name) {
+        throw new Error("An error ocurred while trying to delete the ".concat(name));
+    };
+    ResultError.Nofity = function (info) {
         console.log("========Notify method======", info.methodName);
         /*mail.NotificationService.Send(NotificationType.Error,
           {
@@ -90,8 +94,9 @@ class ResultError {
             }
           }
         );*/
-    }
-}
+    };
+    return ResultError;
+}());
 exports.ResultError = ResultError;
 // export { generateSecretKey, pushElement, ResultError };
 //# sourceMappingURL=utils.js.map

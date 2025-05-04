@@ -2,11 +2,14 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../../config.js";
 import bcrypt from "bcrypt";
 import UserService  from '../../../main-server/src/services/Userservice.js'
+//import UserService from '@main/services/Userservice.js'
 import { Role } from "../../../../shared/utils/enums.js";
+//import { Role } from "@shared/utils/enums.js";
 
 const service = new UserService();
 //Middleware
 export default function authenticationToken(req: any, res: any, next: any) {
+  debugger
   console.log('function:','authenticationToken')
   debugger;
   try {

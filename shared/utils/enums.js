@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CurrencyType = exports.SourceTypeNotification = exports.PaymentGatewayStatus = exports.PaymentGateway = exports.PaymentMethod = exports.CardType = exports.PaymentStatus = exports.AddressType = exports.OrderStatus = exports.Phonetype = exports.PaymentType = exports.Role = exports.PackagingType = exports.AccountType = exports.ContactType = exports.ChangePasswordType = exports.ForgotPasswordType = exports.NotificationType = exports.EmailType = exports.PositionType = exports.SolarPanelType = exports.ProductType = void 0;
+exports.AccountActivationError = exports.CurrencyType = exports.SourceTypeNotification = exports.PaymentGatewayStatus = exports.PaymentGateway = exports.PaymentMethod = exports.CardStatus = exports.CardType = exports.PaymentStatus = exports.AddressType = exports.OrderStatus = exports.Phonetype = exports.PaymentType = exports.Role = exports.PackagingType = exports.AccountType = exports.ContactType = exports.ChangePasswordType = exports.ForgotPasswordType = exports.NotificationType = exports.EmailType = exports.PositionType = exports.SolarPanelType = exports.ProductType = void 0;
 var ProductType;
 (function (ProductType) {
     ProductType[ProductType["SolarPanel"] = 100] = "SolarPanel";
@@ -24,10 +24,11 @@ var EmailType;
 })(EmailType || (exports.EmailType = EmailType = {}));
 var NotificationType;
 (function (NotificationType) {
-    NotificationType[NotificationType["Resistration"] = 100] = "Resistration";
+    NotificationType[NotificationType["Registration"] = 100] = "Registration";
     NotificationType[NotificationType["ChangePassword"] = 101] = "ChangePassword";
     NotificationType[NotificationType["ForgotPassword"] = 102] = "ForgotPassword";
     NotificationType[NotificationType["Error"] = 103] = "Error";
+    NotificationType[NotificationType["Reactivation"] = 104] = "Reactivation";
 })(NotificationType || (exports.NotificationType = NotificationType = {}));
 var ForgotPasswordType;
 (function (ForgotPasswordType) {
@@ -143,6 +144,11 @@ var CardType;
     CardType[CardType["Discover"] = 103] = "Discover";
     CardType[CardType["JCB"] = 104] = "JCB";
 })(CardType || (exports.CardType = CardType = {}));
+var CardStatus;
+(function (CardStatus) {
+    CardStatus[CardStatus["Active"] = 100] = "Active";
+    CardStatus[CardStatus["Inactive"] = 101] = "Inactive";
+})(CardStatus || (exports.CardStatus = CardStatus = {}));
 var PaymentMethod;
 (function (PaymentMethod) {
     PaymentMethod[PaymentMethod["CreditCard"] = 100] = "CreditCard";
@@ -172,3 +178,11 @@ var CurrencyType;
     CurrencyType[CurrencyType["JPY"] = 103] = "JPY";
     CurrencyType[CurrencyType["CNY"] = 104] = "CNY";
 })(CurrencyType || (exports.CurrencyType = CurrencyType = {}));
+var AccountActivationError;
+(function (AccountActivationError) {
+    AccountActivationError["AA"] = "User is already active";
+    AccountActivationError["NA"] = "User is not active";
+    AccountActivationError["NF"] = "User not found";
+    AccountActivationError["EL"] = "Expired link";
+})(AccountActivationError || (exports.AccountActivationError = AccountActivationError = {}));
+//# sourceMappingURL=enums.js.map

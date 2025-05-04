@@ -1,11 +1,11 @@
-import * as enums from "../utils/enums";
+import { AccountType,OrderStatus,CardType, CardStatus,AddressType,Phonetype} from "../utils/enums";
 
 export type Contact = {
   readonly id?: number;
   firstname: string;
   lastname: string;
   stateId?: string;
-  accountTypeId?: enums.AccountType;
+  accountTypeId?: AccountType;
   user: {
     id?: string;
     email: string;
@@ -16,7 +16,7 @@ export type Contact = {
     order?: {
       id?: string;
       orderDate: Date;
-      orderStatus: enums.OrderStatus;
+      orderStatus: OrderStatus;
       contactId?:number
       orderDetails: [{ productId: number; quantity: number,orderId:number }];
 
@@ -25,8 +25,8 @@ export type Contact = {
       {
         id?: string;
         cardNumber: string;
-        cardType: enums.CardType;
-        cardStatus: enums.CardStatus;
+        cardType: CardType;
+        cardStatus: CardStatus;
         cardLimit: number;
         cardExpDate: Date;
         cardCVV: string;
@@ -44,12 +44,12 @@ export type Contact = {
     isPrimary?:boolean
     zipcode: string;
     country: string;
-    addressTypeId: enums.AddressType;
+    addressTypeId:AddressType;
     contactId:number;
   }];
   phone?: [{
     phone: string;
-    phoneTypeId: enums.Phonetype;
+    phoneTypeId: Phonetype;
     contactId:number;
     isPrimary?:boolean
   }];

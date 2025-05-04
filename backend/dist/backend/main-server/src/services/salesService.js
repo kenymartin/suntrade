@@ -1,20 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SalesService = void 0;
-const client_1 = require("@prisma/client");
-const utils_1 = require("../../../../backend/utils/utils");
-const prisma = new client_1.PrismaClient();
-class SalesService {
-    getById(id) {
+var client_1 = require("@prisma/client");
+var utils_1 = require("../../../../backend/utils/utils");
+//import { ResultError } from "@backend/utils/utils";
+var prisma = new client_1.PrismaClient();
+var SalesService = /** @class */ (function () {
+    function SalesService() {
+    }
+    SalesService.prototype.getById = function (id) {
         try {
-            this.result = prisma.sales.findUnique({ where: { id } });
+            this.result = prisma.sales.findUnique({ where: { id: id } });
         }
         catch (error) {
             utils_1.ResultError.TriedGetOne("Sales");
         }
         return this.result;
-    }
-    getAll() {
+    };
+    SalesService.prototype.getAll = function () {
         try {
             this.result = prisma.sales.findMany();
         }
@@ -22,37 +25,38 @@ class SalesService {
             utils_1.ResultError.TriedGetMany("Sales");
         }
         return this.result;
-    }
-    update(data) {
+    };
+    SalesService.prototype.update = function (data) {
         try {
-            const { id } = data;
-            this.result = prisma.sales.update({ where: { id }, data });
+            var id = data.id;
+            this.result = prisma.sales.update({ where: { id: id }, data: data });
         }
         catch (error) {
             utils_1.ResultError.TriedUpdateOne("Sales");
         }
         return this.result;
-    }
-    create(data) {
+    };
+    SalesService.prototype.create = function (data) {
         try {
             this.result = prisma.sales.create({
-                data,
+                data: data,
             });
         }
         catch (error) {
             utils_1.ResultError.TriedCreateOne("Sales");
         }
         return this.result;
-    }
-    delete(id) {
+    };
+    SalesService.prototype.delete = function (id) {
         try {
-            this.result = prisma.sales.delete({ where: { id } });
+            this.result = prisma.sales.delete({ where: { id: id } });
         }
         catch (error) {
             utils_1.ResultError.TriedDeleteOne("Sales");
         }
         return this.result;
-    }
-}
+    };
+    return SalesService;
+}());
 exports.SalesService = SalesService;
 //# sourceMappingURL=salesService.js.map

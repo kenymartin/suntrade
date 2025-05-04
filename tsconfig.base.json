@@ -16,8 +16,10 @@
     "baseUrl": "./",                     
     "paths": {
       "@shared/*": ["../../shared/*"],
+      "@backend/*":["../../backend/*"],
       "@main/*": ["../../backend/main-server/src/*"],
-      "@auth/*": ["../../backend/auth-server/src/*"]
+      "@auth/*": ["../../backend/auth-server/src/*"],
+      "@root/*": ["./suntrade"]
     },
     "types": ["node"],
     "lib": ["ES2020"],

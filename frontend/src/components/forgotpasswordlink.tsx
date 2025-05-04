@@ -7,7 +7,7 @@ const ForgotPasswordLink = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const [message,setMessage] =useState("");
 
-  const handleBlur = (e: React.FocusEvent) => {
+  const handleBlur = (_e: React.FocusEvent) => {
     setMessage("");
   }
   const handleSubmit = (e: React.FormEvent) => {
@@ -29,10 +29,10 @@ const ForgotPasswordLink = () => {
         console.error(error);
       });
   };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (_e: React.ChangeEvent<HTMLInputElement>) => {
   
   }
-  const handleFocus = (e: React.FocusEvent) => {
+  const handleFocus = (_e: React.FocusEvent) => {
     setMessage("");
     
   }

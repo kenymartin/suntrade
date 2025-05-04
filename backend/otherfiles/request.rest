@@ -10,7 +10,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZW11c2siL
 #
 
 ###
-POST http://localhost:3000/api/users
+POST http://localhost:3000/api/users/
 Content-Type: application/json
 
 {
@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/api/users
+POST http://localhost:3000/api/users/
 Content-Type: application/json
 
 {
@@ -29,47 +29,15 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/api/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZHRydW1wIiwicGFzc3dvcmQiOiIxMjM0IiwiaWF0IjoxNzE1NTUxODIwLCJleHAiOjE3MTU1NTMwMjB9.mYYTu8wIfCba1_wJAQ07bl9SIY4q5CpDl6cgjUaHbRQ
-###
-GET http://localhost:3000/api/users/3438b24d-158b-4102-a490-ae442d9643bd
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoia21hcnRpbiIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNzIyOTc1NjU1LCJleHAiOjE3MjI5NzY4NTV9.C0BjPfscYtOZXx-tsx4QIbeBf-IvAljA-frC2NkWBSY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZW11c2siLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTc0MjA5MzcwNywiZXhwIjoxNzQyMDk0OTA3fQ.2iL-CAevw1XuG5QWjJs_JXeUMyWiOtOXa9c14WhSi9c
+
 
 ###
-POST http://localhost:3001/login
+POST http://localhost:3001/api/token/
 Content-Type: application/json
 
+
 {
-  "username": "kmartin",
+  "username":"emusk",
   "password":"123"
 }
-
-###
-
-GET http://localhost:3000/api/userlogin
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoia21hcnRpbiIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNzIzMTY4NTA1LCJleHAiOjE3MjMxNjk3MDV9.2AAKTbu1QQ9ITF-Kld9F3DALRL1Prtgk_riFri7HNLQ
-
-
-###
-POST http://localhost:3001/token
-Content-Type: application/json
-{
-  "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmZ1cnkiLCJpYXQiOjE2OTMwMjQ0MjB9.5C3OiVhHW0bk5X422zAfXp0n8_tEGRbqgETm3qlurYw"
-}
-
-###
-DELETE  http://localhost:3001/logout
-Content-Type: application/json
-
-{
-  "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmZ1cnkiLCJpYXQiOjE2OTMwMjQ0MjB9.5C3OiVhHW0bk5X422zAfXp0n8_tEGRbqgETm3qlurYw"
-}
-###
-PATCH  http://localhost:3000/api/contacts/
-
-Content-Type: application/javascript
-
-{
-  "id":"2",
-   "firstname":"New Name"
-}
-

@@ -3,15 +3,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
-const CustomLimitter = (max, time, sfr, ssr) => {
-    return (next) => {
+var express_rate_limit_1 = __importDefault(require("express-rate-limit"));
+var CustomLimitter = function (max, time, sfr, ssr) {
+    return function (next) {
         (0, express_rate_limit_1.default)({
-            windowMs: (time ?? 60) * 1000, //1 minute(s)
-            max: max ?? 100, //Maximum 100 requests per windowMs
+            windowMs: (time !== null && time !== void 0 ? time : 60) * 1000, //1 minute(s)
+            max: max !== null && max !== void 0 ? max : 100, //Maximum 100 requests per windowMs
             message: "Rate limit exceeded,try again later",
-            skipFailedRequests: sfr ?? false, //
-            skipSuccessfulRequests: ssr ?? false, //
+            skipFailedRequests: sfr !== null && sfr !== void 0 ? sfr : false, //
+            skipSuccessfulRequests: ssr !== null && ssr !== void 0 ? ssr : false, //
         });
         next();
     };

@@ -123,6 +123,7 @@ export const ForgotPasswordLink = async (req: Request,res: Response): Promise<vo
   }
 };
 export const getUser = async (req: Request, res: Response): Promise<void> => {
+  debugger
   try {
     const userId = req.params.id;
     const user = await service.getById(userId);
@@ -185,6 +186,7 @@ export const checkUserName = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  debugger
   try {
     const { username } = req.body;
     const data = await service.checkUserName(username);

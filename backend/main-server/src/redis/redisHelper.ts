@@ -9,7 +9,7 @@ export default class RedisHelper {
     return new Promise((resolve, reject) => {
       try {
 
-        resolve(!redisClient.exists(key) ?? redisClient.set(key, values));
+        resolve(!redisClient.exists(key) ? redisClient.set(key, values): resolve);
       } catch (error) {
         reject(error)
       }

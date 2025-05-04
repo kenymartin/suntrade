@@ -5,6 +5,7 @@ interface Config {
   //JWT VARIABLES
   jwSecrect: string|any;
   jwExpiredIn?: string;
+  refreshTokenExpiredIn?: string;
   refreshTokenSecret(): string|undefined;
   ///SMTP VARIBALES
   smtpService?: string;
@@ -27,6 +28,7 @@ const config: Config = {
   //JWT VARIABLES
   jwSecrect: process.env.ACCESS_TOKEN_SECRECT,
   jwExpiredIn:process.env.ACCESS_TOKEN_SECRET_EXPIRES_IN,
+  refreshTokenExpiredIn:process.env.REFRESH_TOKEN_SECRET_EXPIRES_IN,
   refreshTokenSecret() {
     return process.env.REFRESH_TOKEN_SECRECT;
   },

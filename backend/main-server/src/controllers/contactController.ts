@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import Contactservice from "../services/Contactservice.js";
+// import Contact  from "@shared/model/contact.model.js";
 //import Joi from "joi";
 const service = new Contactservice();
 
-export const getContact = async (req: Request,res: Response): Promise<void> => {
+export const getContact = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const Id = parseInt(id);
@@ -19,6 +20,7 @@ export const getContact = async (req: Request,res: Response): Promise<void> => {
     res.status(500).json("An error ocurred while fetching the contact.");
   }
 };
+
 export const getContacts = async (
   req: Request,
   res: Response
@@ -35,34 +37,39 @@ export const getContacts = async (
     res.status(500).json("An error ocurred while fetching the contacts");
   }
 };
-export const register = async (req:Request, res:Response):Promise<void> => {
-  debugger
-  let resultMessage ={};
+
+export const register = async (req: Request, res: Response): Promise<void> => {
+  debugger;
+  let resultMessage = {};
+  const test1 = 10;
+  const test2 = 2;
+  const test3 = test1 + test2;
+  console.log(test3);
   try {
-    const {data} = req.body;
+    const { data } = req.body.query;
     const result = await service.register(data);
-    if(result)
-      res
-        .status(201)
-        . json({ Done: true, message: "Contact registration succesfully"});
+    if (result) {
+      res.status(201).json({ Done: true, message: "Contact registration succesfully" });
+    }
   } catch (error) {
     console.error("Error creating the register.", error);
     res.status(500).json(resultMessage);
   }
-}
-export const updateContact =async(req:Request, res:Response):Promise<void>=>{
-  try {
-    const {data} =req.body;
-    data.id =parseInt(req.params['id'])
-    const result = await service.update(data)
-    res.status(201).json(result)
-  } catch (error) {
-    console.error('Error while updating the contact',error)
-    res.status(500).json("An error ocurred while updating the contact")
-  }
-}
+};
 
-export const getWithFilter = async (req:Request, res:Response):Promise<void>=>{
+export const updateContact = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { data } = req.body;
+    data.id = parseInt(req.params["id"]);
+    const result = await service.update(data);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error("Error while updating the contact", error);
+    res.status(500).json("An error ocurred while updating the contact");
+  }
+};
+
+export const getWithFilter = async (req: Request, res: Response): Promise<void> => {
   try {
     const { select, where, orderBy } = req.query;
 
@@ -77,7 +84,7 @@ export const getWithFilter = async (req:Request, res:Response):Promise<void>=>{
     console.error("Error while getting the contacts", error);
     res.status(500).json({ message: "Failed to get contacts" });
   }
-}
+};
 
 export default {
   getContact,

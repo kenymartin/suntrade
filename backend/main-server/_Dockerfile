@@ -1,0 +1,33 @@
+# Use an official Node.js runtime as a parent image
+FROM node:16
+
+# Set the working directory in the container
+WORKDIR /suntrade
+# Copy the base tsconfig to maintain the relative path
+COPY /tsconfig.base.json /tsconfig.base.json
+COPY /shared/utils/ /shared/utils/
+# Copy package.json and package-lock.json
+COPY /backend/main-server/package*.json ./
+COPY /backend/package*.json ./
+
+# Copy the tsconfig.json from main-server
+COPY /backend/main-server/tsconfig.json ./backend/main-server/
+COPY /backend/tsconfig.json ./backend/
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY /backend/dist/backend/main-server .
+
+# Build the application (assumes your build command is defined in package.json)
+RUN npm run build
+
+# Check the output directory
+RUN ls -R /suntrade/backen/dist/main-server
+
+# Expose the port the suntrade runs on
+EXPOSE 3000
+
+# Command to run the application
+CMD ["node", "../dist/backend/main-server/src/server.js"]

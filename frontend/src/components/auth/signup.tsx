@@ -118,6 +118,7 @@ const notifyError = () =>
   };
 
   const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
+    debugger
     e.preventDefault();
     debugger;
     if (isSubmitting) return;

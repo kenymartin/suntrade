@@ -1,6 +1,5 @@
 import crypto from 'crypto';
 import { EncryptionUtils } from '../../shared/encryptionUtils';
-import { result } from 'lodash';
 
 
 const algorithm = 'aes-256-cbc';

@@ -75,6 +75,6 @@ function generateAccessToken(user: any) {
   console.log("AuthServer server is running on port 6000");
 });*/
 //const PORT = process.env.DEV_AUTH_PORT || 6000;
-authApp.listen(3001, () => {
+authApp.listen(3001, '0.0.0.0',() => {
   console.log(`Server listening on port ${3001}`);
 });

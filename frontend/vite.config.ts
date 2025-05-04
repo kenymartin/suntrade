@@ -27,7 +27,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "build",
+    outDir: "dist",//build
     sourcemap:true,
     rollupOptions: {
       input: "/index.html",
@@ -39,8 +39,34 @@ export default defineConfig({
         "/assets/mail/jqBootstrapValidation.min.js",
         "/assets/mail/contact.js",
         "/assets/js/main.js",
+
       ],
-      //output: { entryFileNames: "assets/[name]-[hash].js" },
+      output: { entryFileNames: `assets/[name].[hash].js`,
+      chunkFileNames: `assets/[name].[hash].js`,
+      assetFileNames: `assets/[name].[hash].[ext]`,},
+      
+    },
+  },
+  //*************/
+  server: {
+    port:5173,  //3004,
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+    strictPort: true,
+    host: "0.0.0.0",
+    watch: {
+      usePolling: true, // Ensure file changes are detected in a container
+    },
+    hmr: {
+      host: "localhost",
+      protocol: "ws",
     },
   },
 });
