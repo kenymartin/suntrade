@@ -1,0 +1,11 @@
+{
+    "folders": [
+      {
+        "path": "suntrade"
+      }
+    ],
+    "settings": {
+      "dev.containers.workspaceFolder": "suntrade",
+      "dev.containers.workspaceMount": "source=${localWorkspaceFolder}/suntrade,target=/workspace,type=bind"
+    }
+  }
